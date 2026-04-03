@@ -40,3 +40,21 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/worker-app:latest ./worker
           docker push ${{ secrets.DOCKER_USERNAME }}/worker-app:latest
+
+      # 🔹 Update image tag in Kubernetes manifests
+      - name: Update K8s manifests
+        run: |
+          TAG=${{ github.sha }}
+
+          sed -i "s|vote-app:.*|vote-app:$TAG|g" infra/k8s/base/vote/deployment.yaml
+          sed -i "s|result-app:.*|result-app:$TAG|g" infra/k8s/base/result/deployment.yaml
+          sed -i "s|worker-app:.*|worker-app:$TAG|g" infra/k8s/base/worker/deployment.yaml
+
+      # 🔹 Commit & Push changes
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "update image tags"
+          git push    
