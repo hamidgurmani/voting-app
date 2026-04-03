@@ -57,4 +57,4 @@ jobs:
           git config user.email "actions@github.com"
           git add .
           git commit -m "update image tags" || echo "No changes to commit"
-          git push oringin main
+          git push 
