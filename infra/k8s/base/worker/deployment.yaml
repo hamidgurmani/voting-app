@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: worker
-          image: worker-app:latest
-          imagePullPolicy: Never   # Minikube
+          image: hamid009/worker-app:latest
+          imagePullPolicy: Always
 
           env:
             - name: REDIS_HOST

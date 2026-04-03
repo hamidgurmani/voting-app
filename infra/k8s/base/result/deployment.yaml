@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: result
-          image: result-app:latest
-          imagePullPolicy: Never   # Minikube
+          image: hamid009/result-app:latest
+          imagePullPolicy: Always   # Minikube
 
           ports:
             - containerPort: 4000

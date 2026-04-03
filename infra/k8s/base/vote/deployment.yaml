@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: vote
-          image: vote-app:latest
-          imagePullPolicy: Never   # IMPORTANT for Minikube
+          image: hamid009/vote-app:latest
+          imagePullPolicy: Always   
 
           ports:
             - containerPort: 5000
