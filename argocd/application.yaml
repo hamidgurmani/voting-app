@@ -7,8 +7,8 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/<YOUR_GITHUB_USERNAME>/voting-app.git
-    targetRevision: HEAD
+    repoURL: https://github.com/hamidgurmani/voting-app.git
+    targetRevision: main
     path: infra/k8s/overlays/dev
 
   destination:
