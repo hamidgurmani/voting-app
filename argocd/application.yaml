@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: voting-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/<YOUR_GITHUB_USERNAME>/voting-app.git
+    targetRevision: HEAD
+    path: infra/k8s/overlays/dev
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: voting-app
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
