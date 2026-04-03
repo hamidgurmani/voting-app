@@ -4,3 +4,27 @@ bin/
 obj/
 .vs/
 node_modules/
+
+# Environment variables
+.env
+
+# Virtual environments
+venv/
+*/venv/
+
+# ArgoCD / Infra directories (if generated or not meant for repo)
+argocd/
+infra/
+
+# Docker ignore files (if not needed in repo)
+vote/.dockerignore
+worker/.dockerignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
