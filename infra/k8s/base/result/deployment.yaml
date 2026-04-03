@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: result
-          image: hamid009/result-app:latest
+          image: hamid009/result-app:e031da3db2db700b04b7bdd89cbef2bb4c7e344b
           imagePullPolicy: Always   # Minikube
 
           ports:
