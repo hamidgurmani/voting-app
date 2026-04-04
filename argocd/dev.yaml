@@ -13,7 +13,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: vim argocd/dev.yaml
+    namespace: default
 
   syncPolicy:
     automated:
