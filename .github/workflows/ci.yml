@@ -6,71 +6,81 @@ on:
       - main
 
 jobs:
-
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
 
-      # 🔹 Checkout code
+      # 🔹 Checkout
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 🔹 Login to Docker Hub
+      # 🔹 Docker login
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 🔹 Build vote
+      # =========================
+      # 🔥 VOTE SERVICE
+      # =========================
+
       - name: Build Vote
         run: |
           TAG=${{ github.sha }}
           docker build -t ${{ secrets.DOCKER_USERNAME }}/vote-app:latest \
-                 -t ${{ secrets.DOCKER_USERNAME }}/vote-app:$TAG ./vote
-          
-      # Scan vote image with Trivy and Push           
-      - name: Scan(Trivy) and Push Vote
+                       -t ${{ secrets.DOCKER_USERNAME }}/vote-app:$TAG ./vote
+
+      - name: Scan Vote Image
         uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: ${{ secrets.DOCKER_USERNAME }}/vote-app:${{ github.sha }}
           format: table
           exit-code: 1
-          severity: CRITICAL,HIGH   
+          severity: CRITICAL,HIGH
 
+      - name: Push Vote Image
+        run: |
+          TAG=${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/vote-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/vote-app:$TAG
 
+      # =========================
+      # 🔥 RESULT SERVICE
+      # =========================
 
-      # 🔹 Build Result
-      - name: Build Reuslt
+      - name: Build Result
         run: |
           TAG=${{ github.sha }}
           docker build -t ${{ secrets.DOCKER_USERNAME }}/result-app:latest \
-                 -t ${{ secrets.DOCKER_USERNAME }}/result-app:$TAG ./result
+                       -t ${{ secrets.DOCKER_USERNAME }}/result-app:$TAG ./result
 
-      # Scan Result image with Trivy and Push
-      - name: Scan(Trivy) and Push Result
+      - name: Scan Result Image
         uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: ${{ secrets.DOCKER_USERNAME }}/result-app:${{ github.sha }}
           format: table
           exit-code: 1
           severity: CRITICAL,HIGH
-                 
+
+      - name: Push Result Image
+        run: |
+          TAG=${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/result-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/result-app:$TAG
 
-      # 🔹 Build Worker
+      # =========================
+      # 🔥 WORKER SERVICE
+      # =========================
+
       - name: Build Worker
         run: |
           TAG=${{ github.sha }}
           docker build -t ${{ secrets.DOCKER_USERNAME }}/worker-app:latest \
-                 -t ${{ secrets.DOCKER_USERNAME }}/worker-app:$TAG ./worker
-      
-      # Scan Worker image with Trivy and Push
-      - name: Scan(Trivy) and Push Worker
+                       -t ${{ secrets.DOCKER_USERNAME }}/worker-app:$TAG ./worker
+
+      - name: Scan Worker Image
         uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: ${{ secrets.DOCKER_USERNAME }}/worker-app:${{ github.sha }}
@@ -78,28 +88,27 @@ jobs:
           exit-code: 1
           severity: CRITICAL,HIGH
 
+      - name: Push Worker Image
+        run: |
+          TAG=${{ github.sha }}
           docker push ${{ secrets.DOCKER_USERNAME }}/worker-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/worker-app:$TAG
 
+      # =========================
+      # 🔁 UPDATE MANIFESTS
+      # =========================
 
-      # 🔹 Update image tag in Kubernetes manifests
       - name: Update K8s manifests
         run: |
           TAG=${{ github.sha }}
-
           sed -i "s|vote-app:.*|vote-app:$TAG|g" infra/k8s/base/vote/deployment.yaml
           sed -i "s|result-app:.*|result-app:$TAG|g" infra/k8s/base/result/deployment.yaml
           sed -i "s|worker-app:.*|worker-app:$TAG|g" infra/k8s/base/worker/deployment.yaml
 
-      # 🔹 Commit & Push changes
       - name: Commit changes
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "update image tags" || echo "No changes to commit"
+          git commit -m "update image tags" || echo "No changes"
           git push
-
-      - name: Verify Deployment Rollout
-        run: |
-          kubectl rollout status deployment/vote -n voting-app --timeout=60s    
