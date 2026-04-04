@@ -26,20 +26,33 @@ jobs:
       # 🔹 Build & Push Vote
       - name: Build & Push Vote
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/vote-app:latest ./vote
+          TAG=${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/vote-app:latest \
+                 -t ${{ secrets.DOCKER_USERNAME }}/vote-app:$TAG ./vote
+
           docker push ${{ secrets.DOCKER_USERNAME }}/vote-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/vote-app:$TAG
+
 
       # 🔹 Build & Push Result
       - name: Build & Push Result
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/result-app:latest ./result
+          TAG=${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/result-app:latest \
+                 -t ${{ secrets.DOCKER_USERNAME }}/result-app:$TAG ./result
+
           docker push ${{ secrets.DOCKER_USERNAME }}/result-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/result-app:$TAG
 
       # 🔹 Build & Push Worker
       - name: Build & Push Worker
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/worker-app:latest ./worker
+          TAG=${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/worker-app:latest \
+                 -t ${{ secrets.DOCKER_USERNAME }}/worker-app:$TAG ./worker
+
           docker push ${{ secrets.DOCKER_USERNAME }}/worker-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/worker-app:$TAG
 
       # 🔹 Update image tag in Kubernetes manifests
       - name: Update K8s manifests
