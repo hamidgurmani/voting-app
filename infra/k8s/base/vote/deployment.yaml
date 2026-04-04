@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: vote
-          image: hamid009/vote-app:3b75adb8a732dfc4d10e8499fac3c2112bcc2ba1
+          image: hamid009/vote-app:e91d6a32b26ce3bc101559673830ace4c5c414d2
           imagePullPolicy: Always   
 
           ports:
