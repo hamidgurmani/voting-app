@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - ../../base
+namespace: voting-app-dev  
