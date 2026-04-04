@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: hamid009/worker-app:429fa9341a98e0c2f28c1de0875a90a86527af3a
+          image: hamid009/worker-app:4402ec301975dedbad4b4d1a368079dd1cd2991c
           imagePullPolicy: Always
 
           env:
