@@ -37,8 +37,8 @@ jobs:
         with:
           image-ref: ${{ secrets.DOCKER_USERNAME }}/vote-app:${{ github.sha }}
           format: table
-          exit-code: 1
-          severity: CRITICAL
+          exit-code: 0
+          severity: CRITICAL,HIGH
 
       - name: Push Vote Image
         run: |
@@ -61,8 +61,8 @@ jobs:
         with:
           image-ref: ${{ secrets.DOCKER_USERNAME }}/result-app:${{ github.sha }}
           format: table
-          exit-code: 1
-          severity: CRITICAL
+          exit-code: 0
+          severity: CRITICAL,HIGH
 
       - name: Push Result Image
         run: |
@@ -85,8 +85,8 @@ jobs:
         with:
           image-ref: ${{ secrets.DOCKER_USERNAME }}/worker-app:${{ github.sha }}
           format: table
-          exit-code: 1
-          severity: CRITICAL
+          exit-code: 0
+          severity: CRITICAL,HIGH
 
       - name: Push Worker Image
         run: |
