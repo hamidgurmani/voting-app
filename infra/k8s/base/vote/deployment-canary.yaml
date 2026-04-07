@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote-canary
+  namespace: voting-app
+spec:
+  replicas: 1   # 👈 small traffic (canary)
+  selector:
+    matchLabels:
+      app: vote
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: vote
+        version: canary
+    spec:
+      containers:
+        - name: vote
+          image: hamid009/vote-app:latest   # or new version
+          ports:
+            - containerPort: 5000
