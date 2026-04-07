@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vote-canary
-  namespace: voting-app
+  namespace: voting-app-prod
 spec:
   replicas: 1   # 👈 small traffic (canary)
   selector:
