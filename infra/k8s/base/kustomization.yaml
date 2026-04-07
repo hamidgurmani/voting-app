@@ -14,6 +14,7 @@ resources:
 
   - vote/deployment.yaml
   - vote/service.yaml
+  - vote/deployment-green.yaml  
 
   - result/deployment.yaml
   - result/service.yaml
