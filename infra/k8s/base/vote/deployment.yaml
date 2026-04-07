@@ -13,10 +13,12 @@ spec:
   selector:
     matchLabels:
       app: vote
+      version: blue  
   template:
     metadata:
       labels:
         app: vote
+        version: blue  
     spec:
       containers:
         - name: vote
