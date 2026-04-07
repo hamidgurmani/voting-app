@@ -15,3 +15,12 @@ patches:
       - op: replace
         path: /spec/replicas
         value: 1
+
+patches:
+  - target:
+      kind: Service
+      name: vote
+    patch: |-
+      - op: replace
+        path: /spec/selector/version
+        value: green
