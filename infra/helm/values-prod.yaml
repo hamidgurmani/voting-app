@@ -2,4 +2,4 @@ replicaCount: 3
 
 image:
   repository: hamid009/vote-app
-  tag: "latest"
+  tag: "8dad298428ef1db3fc983f011678c013b05da015"
