@@ -8,12 +8,12 @@ spec:
 
   source:
     repoURL: https://github.com/hamidgurmani/voting-app.git
-    targetRevision: HEAD
+    targetRevision: main
     path: infra/helm
 
     helm:
       valueFiles:
-        - values.yaml
+        - values-prod.yaml
 
   destination:
     server: https://kubernetes.default.svc
