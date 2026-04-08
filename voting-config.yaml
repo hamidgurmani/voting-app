@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  OPTION_A: Cats
+  OPTION_B: Dogs
+  POSTGRES_HOST: db
+  REDIS_HOST: redis
+kind: ConfigMap
+metadata:
+  annotations:
+    argocd.argoproj.io/tracking-id: voting-app-prod:/ConfigMap:voting-app-prod/voting-config
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"OPTION_A":"Cats","OPTION_B":"Dogs","POSTGRES_HOST":"db","REDIS_HOST":"redis"},"kind":"ConfigMap","metadata":{"annotations":{"argocd.argoproj.io/tracking-id":"voting-app-prod:/ConfigMap:voting-app-prod/voting-config"},"name":"voting-config","namespace":"voting-app-prod"}}
+  creationTimestamp: "2026-04-05T08:13:08Z"
+  name: voting-config
+  namespace: helm-test
+  resourceVersion: "4970"
+  uid: bff208d4-8245-4881-b466-82aac63717d9
