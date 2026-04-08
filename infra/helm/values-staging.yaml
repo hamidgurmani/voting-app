@@ -1,0 +1,5 @@
+replicaCount: 2
+
+image:
+  repository: hamid009/vote-app
+  tag: "staging"
